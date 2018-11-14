@@ -366,24 +366,27 @@ function stopDataRefreshTimer(scale) {
 }
 
 function startDataRefreshTimer(scale) {
-	var realtime = scale.realtime;
-	var interval = resolveOption(scale, 'refresh');
+    var interval = resolveOption(scale, 'refresh');
 
     // Build a worker from an anonymous function body
     var blobURL = URL.createObjectURL( new Blob([ '(',
 		function(){
-            setInterval(function(){
-                postMessage({});
-            }, interval);
-            postMessage({});
+			this.onmessage = function(e){
+				setInterval(function(){
+					postMessage({});
+				}, e.data);
+				postMessage({});
+			};
+
 		}.toString(),
 		')()' ], { type: 'application/javascript' } ) ),
 	worker = new Worker( blobURL );
+    worker.postMessage(interval)
     worker.onmessage = function(e){
         refreshData(scale);
     };
 
-	// Won't be needing this anymore
+    // Won't be needing this anymore
     URL.revokeObjectURL( blobURL );
 
 	/*
