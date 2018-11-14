@@ -417,8 +417,26 @@ function stopDataRefreshTimer(scale) {
 }
 
 function startDataRefreshTimer(scale) {
-	var realtime = scale.realtime;
 	var interval = resolveOption(scale, 'refresh');
+
+    // Build a worker from an anonymous function body
+    var blobURL = URL.createObjectURL( new Blob([ '(',
+		function(){
+            setInterval(function(){
+                postMessage({});
+            }, 1000);
+            postMessage({});
+		}.toString(),
+		')()' ], { type: 'application/javascript' } ) ),
+	worker = new Worker( blobURL );
+    worker.onmessage = function(e){
+        refreshData(scale);
+    };
+
+	// Won't be needing this anymore
+    URL.revokeObjectURL( blobURL );
+
+	/*
 
 	realtime.refreshTimerID = setInterval(function() {
 		var newInterval = resolveOption(scale, 'refresh');
@@ -430,6 +448,7 @@ function startDataRefreshTimer(scale) {
 		}
 	}, interval);
 	realtime.refreshInterval = interval;
+	*/
 }
 
 var transitionKeys = {
