@@ -1,17 +1,17 @@
 /*
  * @license
- * @antoniogiliberto/chartjs-plugin-streaming
+ * @giliweb/chartjs-plugin-streaming
  * https://github.com/nagix/chartjs-plugin-streaming/
  * Version: 1.7.0
  *
  * Copyright 2018 Akihiko Kusanagi
  * Released under the MIT license
- * https://github.com/nagix/@antoniogiliberto/chartjs-plugin-streaming/blob/master/LICENSE.md
+ * https://github.com/nagix/@giliweb/chartjs-plugin-streaming/blob/master/LICENSE.md
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('chart.js'), require('moment')) :
 	typeof define === 'function' && define.amd ? define(['chart.js', 'moment'], factory) :
-	(global['@antoniogiliberto/chartjs-plugin-streaming'] = factory(global.Chart,global.moment));
+	(global['@giliweb/chartjs-plugin-streaming'] = factory(global.Chart,global.moment));
 }(this, (function (Chart,moment) { 'use strict';
 
 Chart = Chart && Chart.hasOwnProperty('default') ? Chart['default'] : Chart;
@@ -417,23 +417,27 @@ function stopDataRefreshTimer(scale) {
 }
 
 function startDataRefreshTimer(scale) {
-	var interval = resolveOption(scale, 'refresh');
+    var interval = resolveOption(scale, 'refresh');
 
     // Build a worker from an anonymous function body
     var blobURL = URL.createObjectURL( new Blob([ '(',
 		function(){
-            setInterval(function(){
-                postMessage({});
-            }, interval);
-            postMessage({});
+			this.onmessage = function(e){
+				setInterval(function(){
+					postMessage({});
+				}, e.data);
+				postMessage({});
+			};
+
 		}.toString(),
 		')()' ], { type: 'application/javascript' } ) ),
 	worker = new Worker( blobURL );
+    worker.postMessage(interval);
     worker.onmessage = function(e){
         refreshData(scale);
     };
 
-	// Won't be needing this anymore
+    // Won't be needing this anymore
     URL.revokeObjectURL( blobURL );
 
 	/*
