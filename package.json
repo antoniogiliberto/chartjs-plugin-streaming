@@ -1,5 +1,5 @@
 {
-  "name": "chartjs-plugin-streaming",
+  "name": "@antoniogiliberto/chartjs-plugin-streaming",
   "version": "1.7.0",
   "description": "Chart.js plugin for live streaming data",
   "main": "dist/chartjs-plugin-streaming.js",
