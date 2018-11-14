@@ -424,7 +424,7 @@ function startDataRefreshTimer(scale) {
 		function(){
             setInterval(function(){
                 postMessage({});
-            }, 1000);
+            }, interval);
             postMessage({});
 		}.toString(),
 		')()' ], { type: 'application/javascript' } ) ),
