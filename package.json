@@ -2,7 +2,7 @@
   "name": "@antoniogiliberto/chartjs-plugin-streaming",
   "version": "1.7.0",
   "description": "Chart.js plugin for live streaming data",
-  "main": "dist/chartjs-plugin-streaming.js",
+  "main": "dist/@antoniogiliberto/chartjs-plugin-streaming.js",
   "directories": {
     "doc": "docs",
     "test": "test"
