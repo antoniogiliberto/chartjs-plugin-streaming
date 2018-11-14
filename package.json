@@ -1,6 +1,6 @@
 {
   "name": "@giliweb/chartjs-plugin-streaming",
-  "version": "1.7.0",
+  "version": "0.0.2",
   "description": "Chart.js plugin for live streaming data",
   "main": "dist/@giliweb/chartjs-plugin-streaming.js",
   "directories": {
@@ -37,5 +37,6 @@
     "scroll"
   ],
   "author": "Antonio Giliberto",
-  "license": "MIT"
+  "license": "MIT",
+  "scope": "@giliweb"
 }
