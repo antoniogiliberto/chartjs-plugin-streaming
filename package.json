@@ -1,6 +1,6 @@
 {
   "name": "@giliweb/chartjs-plugin-streaming",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Chart.js plugin for live streaming data",
   "main": "dist/@giliweb/chartjs-plugin-streaming.js",
   "directories": {
