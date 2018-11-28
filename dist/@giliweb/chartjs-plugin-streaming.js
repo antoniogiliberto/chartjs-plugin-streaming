@@ -2,7 +2,7 @@
  * @license
  * @giliweb/chartjs-plugin-streaming
  * https://github.com/nagix/chartjs-plugin-streaming/
- * Version: 1.7.0
+ * Version: 0.0.2
  *
  * Copyright 2018 Akihiko Kusanagi
  * Released under the MIT license
@@ -59,10 +59,6 @@ var scaleService = Chart.scaleService;
 var TimeScale = scaleService.getScaleConstructor('time');
 
 scaleService.getScaleConstructor = function(type) {
-	// For backwards compatibility
-	if (type === 'time') {
-		type = 'realtime';
-	}
 	return this.constructors.hasOwnProperty(type) ? this.constructors[type] : undefined;
 };
 
@@ -582,7 +578,7 @@ var RealTimeScale = TimeScale.extend({
 		TimeScale.prototype.initialize.apply(me, arguments);
 
 		// For backwards compatibility
-		if (me.options.type === 'time' && !me.chart.options.plugins.streaming) {
+		if (me.options.type === 'realtime' && !me.chart.options.plugins.streaming) {
 			return;
 		}
 
@@ -596,7 +592,7 @@ var RealTimeScale = TimeScale.extend({
 		var realtime = me.realtime;
 
 		// For backwards compatibility
-		if (me.options.type === 'time' && !me.chart.options.plugins.streaming) {
+		if (me.options.type === 'realtime' && !me.chart.options.plugins.streaming) {
 			return TimeScale.prototype.update.apply(me, arguments);
 		}
 
@@ -617,7 +613,7 @@ var RealTimeScale = TimeScale.extend({
 		var options = me.options;
 
 		// For backwards compatibility
-		if (options.type === 'time' && !me.chart.options.plugins.streaming) {
+		if (options.type === 'realtime' && !me.chart.options.plugins.streaming) {
 			return TimeScale.prototype.buildTicks.apply(me, arguments);
 		}
 
@@ -663,7 +659,7 @@ var RealTimeScale = TimeScale.extend({
 		TimeScale.prototype.fit.apply(me, arguments);
 
 		// For backwards compatibility
-		if (options.type === 'time' && !me.chart.options.plugins.streaming) {
+		if (options.type === 'realtime' && !me.chart.options.plugins.streaming) {
 			return;
 		}
 
@@ -679,7 +675,7 @@ var RealTimeScale = TimeScale.extend({
 		var chart = me.chart;
 
 		// For backwards compatibility
-		if (me.options.type === 'time' && !chart.options.plugins.streaming) {
+		if (me.options.type === 'realtime' && !chart.options.plugins.streaming) {
 			TimeScale.prototype.draw.apply(me, arguments);
 			return;
 		}
@@ -708,7 +704,7 @@ var RealTimeScale = TimeScale.extend({
 		var me = this;
 
 		// For backwards compatibility
-		if (me.options.type === 'time' && !me.chart.options.plugins.streaming) {
+		if (me.options.type === 'realtime' && !me.chart.options.plugins.streaming) {
 			return;
 		}
 
